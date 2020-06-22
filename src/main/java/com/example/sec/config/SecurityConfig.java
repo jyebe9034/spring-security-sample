@@ -1,6 +1,6 @@
 package com.example.sec.config;
 
-import com.example.sec.service.MemberServiceImpl;
+import com.example.sec.service.MemberService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +18,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter { // WebSecurityConfigurerAdapter는 WebSecurityConfigurer 인스턴스를 쉽게 생성하기 위한 클래
 
-    private MemberServiceImpl memberServiceImpl;
+    private MemberService memberService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { // WebSecurit
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         // 로그인 처리, 즉 인증을 위해서는 UserDetailService를 통해 정보를 가져오는데 memberService가 UserDetailService를 구현하도록 함.
-        auth.userDetailsService(memberServiceImpl).passwordEncoder(passwordEncoder()); // 비밀번호 암호화를 위해 passwordEncoder()를 사용함.
+        auth.userDetailsService(memberService).passwordEncoder(passwordEncoder()); // 비밀번호 암호화를 위해 passwordEncoder()를 사용함.
     }
 
 }
